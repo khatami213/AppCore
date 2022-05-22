@@ -15,4 +15,11 @@
     <ProjectReference Include="..\DatabaseAccessLayer.EFCore\DatabaseAccessLayer.EFCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>

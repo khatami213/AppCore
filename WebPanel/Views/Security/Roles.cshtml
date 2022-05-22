@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Domain.DTO.Security.Roles.RoleDTO>
+@{
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+<h1>roles</h1>
+
+@foreach (var item in Model)
+{
+    <h4>@item.Name</h4>
+}

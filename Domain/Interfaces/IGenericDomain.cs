@@ -10,6 +10,6 @@ namespace Domain.Interfaces
     {
         Task<T> GetByID(long id);
         Task<IEnumerable<T>> GetAll();
-        
+
     }
 }

@@ -33,6 +33,21 @@ namespace DatabaseAccessLayer.EFCore.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RoleDomain", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("Domain.Entities.StudentDomain", b =>
                 {
                     b.Property<long>("ID")

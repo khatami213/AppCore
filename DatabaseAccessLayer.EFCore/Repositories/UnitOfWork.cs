@@ -14,12 +14,14 @@ namespace DatabaseAccessLayer.EFCore.Repositories
 
         public IStudentDomain _student { get; set; }
         public ICourseDomain _course { get; set; }
+        public IRoleDomain _role { get; set; }
 
         public UnitOfWork(ApplicationContext context)
         {
             _context = context;
             _student = new StudentRepository(_context);
             _course = new CourseRepository(_context);
+            _role = new RoleRepository(_context);
         }
 
         public void Complete()
