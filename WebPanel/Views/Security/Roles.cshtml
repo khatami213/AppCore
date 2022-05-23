@@ -1,10 +1,41 @@
-﻿@model IEnumerable<Domain.DTO.Security.Roles.RoleDTO>
+﻿@model Domain.DTO.Security.Roles.RoleDTO
 @{
     Layout = "~/Views/Shared/_adminLayout.cshtml";
+    ViewBag.Title = "نقش ها";
 }
-<h1>roles</h1>
+<h1>نقش ها</h1>
 
-@foreach (var item in Model)
-{
-    <h4>@item.Name</h4>
-}
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RolesInfo)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        عملیات
+                    </button>
+                    <div class="dropdown-menu shadow animated--grow-in">
+                        @foreach (var link in Model.Actions)
+                        {
+                            <a style='margin-right:16px' class="dropdown-item" asp-controller="@link.Controller" asp-action="@link.Action" asp-route-Id="@item.Id">
+                                @link.Title
+                            </a>
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="CreateRole" class="btn btn-success">جدید</a>

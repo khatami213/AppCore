@@ -20,18 +20,43 @@ namespace DatabaseAccessLayer.EFCore.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<RoleDTO>> GetAllDTO()
+        public async Task AddRoleDTO(NewRoleDTO roleDTO)
         {
-            var roles = await _context.Roles.ToListAsync();
-
-            var res = new List<RoleDTO>();
-
-            foreach (var role in roles)
+            var newRole = new RoleDomain()
             {
-                res.Add(new RoleDTO() { Name = role.Name, Id = role.Id });
-            }
+                Name = roleDTO.Name,
+            };
+            await _context.Roles.AddAsync(newRole);
+        }
 
-            return res;
+        public async Task<RoleDTO> GetAllDTO()
+        {
+            var roleDTO = new RoleDTO();
+
+            roleDTO.RolesInfo.AddRange(await _context.Roles.Select(
+                r => new RoleInfoDTO()
+                {
+                    Id = r.Id,
+                    Name = r.Name
+                }
+                )
+                .ToListAsync());
+
+            return roleDTO;
+        }
+
+        public bool IsDuplicateByName(long id, string name)
+        {
+            return _context.Roles.Any(r => r.Name == name && r.Id != id);
+        }
+
+        public async Task UpdateRoleDTO(UpdateRoleDTO roleDTO)
+        {
+            var oldRole = await _context.Roles.FirstOrDefaultAsync(r => r.Id == roleDTO.Id);
+            if (oldRole != null)
+            {
+                oldRole.Name = roleDTO.Name;
+            }
         }
     }
 }

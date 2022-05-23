@@ -10,6 +10,10 @@ namespace Domain.Interfaces
 {
     public interface IRoleDomain : IGenericDomain<RoleDomain>
     {
-        Task<IEnumerable<RoleDTO>> GetAllDTO();
+        Task<RoleDTO> GetAllDTO();
+        bool IsDuplicateByName(long id, string name);
+        Task AddRoleDTO(NewRoleDTO roleDTO);
+        Task UpdateRoleDTO(UpdateRoleDTO roleDTO);
+
     }
 }

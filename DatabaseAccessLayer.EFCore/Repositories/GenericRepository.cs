@@ -26,5 +26,17 @@ namespace DatabaseAccessLayer.EFCore.Repositories
         {
             return await _context.Set<T>().ToListAsync();
         }
+
+        public async Task<bool> DeleteByID(long id)
+        {
+            var entity = await _context.Set<T>().FindAsync(id);
+            if (entity != null)
+            {
+                _context.Set<T>().Remove(entity);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

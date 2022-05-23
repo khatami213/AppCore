@@ -10,6 +10,8 @@ namespace Domain.Interfaces
     {
         Task<T> GetByID(long id);
         Task<IEnumerable<T>> GetAll();
+        Task<bool> DeleteByID(long id);
+
 
     }
 }

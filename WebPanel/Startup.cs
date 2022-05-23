@@ -51,20 +51,10 @@ namespace WebPanel
 
             app.UseRouting();
 
-            //app.UseMvcWithDefaultRoute();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{Controller=Home}/{action=Index}/{Id?}");
             });
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapGet("/", async context =>
-            //    {
-            //        await context.Response.WriteAsync("Hello World!");
-            //    });
-            //});
         }
     }
 }
