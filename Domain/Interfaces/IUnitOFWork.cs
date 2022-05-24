@@ -11,6 +11,7 @@ namespace Domain.Interfaces
         IStudentDomain _student { get; set; }
         ICourseDomain _course { get; set; }
         IRoleDomain _role { get; set; }
+        IUserDomain _user { get; set; }
         void Complete();
     }
 }

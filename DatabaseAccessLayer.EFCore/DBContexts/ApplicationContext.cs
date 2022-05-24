@@ -18,5 +18,6 @@ namespace DatabaseAccessLayer.EFCore.DBContexts
         public DbSet<StudentDomain> Students { get; set; }
         public DbSet<CourseDomain> Courses { get; set; }
         public DbSet<RoleDomain> Roles { get; set; }
+        public DbSet<UserDomain> Users { get; set; }
     }
 }

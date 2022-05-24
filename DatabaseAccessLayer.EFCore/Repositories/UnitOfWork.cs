@@ -15,6 +15,7 @@ namespace DatabaseAccessLayer.EFCore.Repositories
         public IStudentDomain _student { get; set; }
         public ICourseDomain _course { get; set; }
         public IRoleDomain _role { get; set; }
+        public IUserDomain _user { get; set; }
 
         public UnitOfWork(ApplicationContext context)
         {
@@ -22,6 +23,7 @@ namespace DatabaseAccessLayer.EFCore.Repositories
             _student = new StudentRepository(_context);
             _course = new CourseRepository(_context);
             _role = new RoleRepository(_context);
+            _user = new UserRepository(_context);
         }
 
         public void Complete()
