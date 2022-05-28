@@ -30,6 +30,24 @@
                         <a class="dropdown-item" asp-action="Roles" asp-controller="Security">نقش</a>
                     </div>
                 </li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="#" class="nav-link">@User.Identity.Name</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link" asp-action="logout" asp-controller="Account">خروج</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="nav-link" asp-action="login" asp-controller="Account">ورود</a>
+                    </li>
+                }
+
             </ul>
 
         </div>

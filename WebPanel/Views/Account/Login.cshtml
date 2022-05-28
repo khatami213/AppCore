@@ -6,6 +6,7 @@
 <form method="post" asp-action="Login">
 
     <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="ReturnUrl" />
     <div class="form-group">
         <input asp-for="Username" placeholder="نام کاربری" />
         <span asp-validation-for="Username" class="text-danger"></span>

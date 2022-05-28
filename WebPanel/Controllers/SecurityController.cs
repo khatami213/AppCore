@@ -3,9 +3,11 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Domain.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebPanel.Controllers
 {
+
     public class SecurityController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -28,6 +30,7 @@ namespace WebPanel.Controllers
             return View(roleDTO);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult CreateRole()
         {
