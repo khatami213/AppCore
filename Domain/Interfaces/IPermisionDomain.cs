@@ -9,6 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IPermisionDomain : IGenericDomain<PermisionDomain>
     {
-
+        Task<bool> AddRange(IEnumerable<PermisionDomain> permisionDomain);
     }
 }

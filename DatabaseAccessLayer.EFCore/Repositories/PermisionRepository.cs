@@ -17,5 +17,14 @@ namespace DatabaseAccessLayer.EFCore.Repositories
         {
             _context = context;
         }
+
+        public async Task<bool> AddRange(IEnumerable<PermisionDomain> permisionDomain)
+        {
+            if (permisionDomain == null)
+                return false;
+
+            await _context.Permisions.AddRangeAsync(permisionDomain);
+            return true;
+        }
     }
 }

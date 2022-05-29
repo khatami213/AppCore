@@ -12,8 +12,9 @@ namespace WebPanel.Controllers
         {
             _unitOfWork = unitOfWork;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await CoreService.PermisionManager.SetPermisions(_unitOfWork);
             return View();
         }
     }
