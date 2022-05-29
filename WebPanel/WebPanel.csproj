@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CoreService\CoreService.csproj" />
     <ProjectReference Include="..\DatabaseAccessLayer.EFCore\DatabaseAccessLayer.EFCore.csproj" />
   </ItemGroup>
 

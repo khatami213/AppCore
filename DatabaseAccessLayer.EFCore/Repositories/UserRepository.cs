@@ -1,5 +1,6 @@
 ﻿using DatabaseAccessLayer.EFCore.DBContexts;
 using Domain.DTO.Account.Login;
+using Domain.DTO.Account.Register;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,35 @@ namespace DatabaseAccessLayer.EFCore.Repositories
                 Password = user.Password
             };
 
+        }
+
+        public async Task<bool> IsDuplicateByUsername(string username, long id)
+        {
+            return await _context.Users.AnyAsync(r => r.Username == username && r.Id != id);
+        }
+
+        public async Task<bool> IsDuplicateByUsernameAndUserType(string username, int userType, long id)
+        {
+            return await _context.Users.AnyAsync(r => r.Username == username && r.UserType == userType && r.Id != id);
+        }
+
+        public async Task<bool> RegisterUserDTO(RegisterDTO registerDTO)
+        {
+            if (registerDTO == null)
+                return false;
+            var newUser = new UserDomain()
+            {
+                Email = registerDTO.Email,
+                Username = registerDTO.Username,
+                Password = registerDTO.Password,
+                UserType = registerDTO.UserType,
+                IsActive = false,
+                IsAdmin = false,
+                CreatedOn = DateTime.Now
+            };
+
+            await _context.Users.AddAsync(newUser);
+            return true;
         }
     }
 }
