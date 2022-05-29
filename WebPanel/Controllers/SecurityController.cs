@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Domain.Model;
 using Microsoft.AspNetCore.Authorization;
+using WebPanel.Filters;
 
 namespace WebPanel.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebPanel.Controllers
             return View(roleDTO);
         }
 
-        [Authorize]
+        [CustomAuthorization()]
         [HttpGet]
         public IActionResult CreateRole()
         {

@@ -13,6 +13,8 @@ namespace Domain.Interfaces
         IRoleDomain _role { get; set; }
         IUserDomain _user { get; set; }
         IPermisionDomain _permision { get; set; }
+        IRolePermisionDomain _rolePermision { get; set; }
+
         void Complete();
     }
 }
