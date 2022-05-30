@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DTO.Security.Permisions;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Domain.Interfaces
     public interface IPermisionDomain : IGenericDomain<PermisionDomain>
     {
         Task<bool> AddRange(IEnumerable<PermisionDomain> permisionDomain);
+        Task<PermisionDTO> GetAllPermisionsDTO();
     }
 }

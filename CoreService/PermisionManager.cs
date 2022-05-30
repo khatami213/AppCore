@@ -10,19 +10,20 @@ namespace CoreService
 {
     public static class PermisionManager
     {
-
-        #region Security
-        public const string Security_Roles_HttpGet = "5B34CAE7-3A4B-448A-980C-FBC41F7772F3";
-        public const string Security_CreateRole_HttpGet = "D5B0BFCE-7BD4-46AF-9857-6ED2D9C34081";
-        public const string Security_CreateRole_HttpPost = "6461A843-BF60-4A7F-ADC8-2140E167A0A3";
-        public const string Security_EditRole_HttpGet = "B16F1F63-AB1D-42BE-98A2-8338E6C76986";
-        public const string Security_EditRole_HttpPost = "ED3A2DD9-8B54-450E-9306-CE1E25042402";
-        public const string Security_DeleteRole_HttpGet = "35929923-F2C3-430D-A524-EA438127BA44";
-        #endregion
-
+        public static class Permisions
+        {
+            #region Security
+            public const string Security_Roles_HttpGet = "5B34CAE7-3A4B-448A-980C-FBC41F7772F3";
+            public const string Security_CreateRole_HttpGet = "D5B0BFCE-7BD4-46AF-9857-6ED2D9C34081";
+            public const string Security_CreateRole_HttpPost = "6461A843-BF60-4A7F-ADC8-2140E167A0A3";
+            public const string Security_EditRole_HttpGet = "B16F1F63-AB1D-42BE-98A2-8338E6C76986";
+            public const string Security_EditRole_HttpPost = "ED3A2DD9-8B54-450E-9306-CE1E25042402";
+            public const string Security_DeleteRole_HttpGet = "35929923-F2C3-430D-A524-EA438127BA44";
+            #endregion
+        }
         public static List<KeyValuePair<string, string>> GetPrmisions()
         {
-            var type = typeof(PermisionManager);
+            var type = typeof(Permisions);
             var fileds = type.GetFields();
             var permisions = new List<KeyValuePair<string, string>>();
 

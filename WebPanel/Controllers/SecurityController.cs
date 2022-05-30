@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Domain.Model;
 using Microsoft.AspNetCore.Authorization;
 using WebPanel.Filters;
+using System.Linq;
+using System.Collections.Generic;
+using Domain.DTO.Security.Permisions;
+using Domain.DTO.Security.RolePermision;
 
 namespace WebPanel.Controllers
 {
@@ -26,6 +30,7 @@ namespace WebPanel.Controllers
             var roleDTO = await _unitOfWork._role.GetAllDTO();
 
             roleDTO.Actions.Add(new ActionItems() { Title = "ویرایش", Action = "EditRole", Controller = "Security" });
+            roleDTO.Actions.Add(new ActionItems() { Title = "مدیریت دسترسی", Action = "Permisions", Controller = "Security" });
             roleDTO.Actions.Add(new ActionItems() { Title = "حذف", Action = "DeleteRole", Controller = "Security" });
 
             return View(roleDTO);
@@ -121,5 +126,81 @@ namespace WebPanel.Controllers
         }
 
         #endregion
+
+        #region Permisions
+
+        [HttpGet]
+        public async Task<IActionResult> Permisions(long Id)
+        {
+
+            var permisions = await _unitOfWork._permision.GetAllPermisionsDTO();
+
+            if (Id == 0)
+            {
+                ModelState.AddModelError("", "نقشی پیدا نشد");
+                return View(permisions);
+            }
+
+            var role = await _unitOfWork._role.GetByID(Id);
+            if (role == null)
+            {
+                ModelState.AddModelError("", "نقشی پیدا نشد");
+                return View(permisions);
+            }
+
+            var rolePermisions = await _unitOfWork._rolePermision.GetAllPermisionsIdByRoleId(role.Id);
+
+            foreach (var item in permisions.Permisions)
+            {
+                if (rolePermisions.Any(r => r == item.Id))
+                    item.IsSelected = true;
+            }
+
+            ViewBag.RoleTitle = role.Name;
+            permisions.RoleId = role.Id;
+
+            return View(permisions);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Permisions(PermisionDTO model)
+        {
+            var role = await _unitOfWork._role.GetByID(model.RoleId);
+
+            if (role == null)
+            {
+                ModelState.AddModelError("", "نقشی پیدا نشد");
+                return View(model);
+            }
+
+            //Delete Old Permisions
+
+            if (await _unitOfWork._rolePermision.DeletePermisionsByRoleId(role.Id))
+            {
+                var newRolePermisions = new List<RolePermisionDTO>();
+                foreach (var item in model.Permisions)
+                {
+                    if (item.IsSelected)
+                    {
+                        newRolePermisions.Add(new RolePermisionDTO()
+                        {
+                            PermisionId = item.Id,
+                            RoleId = role.Id
+                        });
+                    }
+                }
+                if (await _unitOfWork._rolePermision.AddRangeRolePermisionInfoDTO(newRolePermisions))
+                {
+                    _unitOfWork.Complete();
+                    return RedirectToAction("Roles");
+                }
+            }
+
+            return View(model);
+        }
+
+        #endregion
+
     }
 }

@@ -1,0 +1,52 @@
+﻿@model Domain.DTO.Security.Permisions.PermisionDTO
+@{
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+    ViewBag.Title = "دسترسی مدیریت";
+}
+
+@if (ViewBag.RoleTitle != null)
+{
+    <h1>مدیریت دسترسی نقش @ViewBag.RoleTitle</h1>
+}
+
+<form method="post" asp-action="Permisions">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input asp-for="RoleId" type="hidden" />
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>نام</th>
+                <th>مقدار</th>
+                <th>انتخاب</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.Permisions.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input asp-for="@Model.Permisions[i].Title" type="hidden">
+                        @Model.Permisions[i].Title
+                    </td>
+                    <td>
+                        <input asp-for="@Model.Permisions[i].Value" type="hidden">
+                        @Model.Permisions[i].Value
+                    </td>
+                    <td>
+                        <input asp-for="@Model.Permisions[i].IsSelected">
+                        <input asp-for="@Model.Permisions[i].Id" type="hidden">
+                    </td>
+
+                </tr>
+            }
+
+
+
+
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">به روز رسانی</button>
+
+</form>
