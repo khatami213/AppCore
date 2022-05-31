@@ -9,6 +9,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Domain.DTO.Security.Permisions;
 using Domain.DTO.Security.RolePermision;
+using Domain.DTO.Security.UserRoles;
 
 namespace WebPanel.Controllers
 {
@@ -242,6 +243,73 @@ namespace WebPanel.Controllers
             }
             users.Actions = new List<ActionItems>() { new ActionItems() { Controller = "security", Action = "UserRoles", Title = "مدیریت نقش ها" } };
             return View(users);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserRoles(long id)
+        {
+            var allRoles = await _unitOfWork._role.GetAllRolesDTO();
+
+            if (id == 0)
+            {
+                ModelState.AddModelError("", "کاربری پیدا نشد");
+                return View();
+            }
+
+            var user = await _unitOfWork._user.GetByID(id);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "کاربری پیدا نشد");
+                return View();
+            }
+
+            var userRoles = await _unitOfWork._userRole.GetRolesByUserID(id);
+
+            foreach (var item in allRoles.Roles)
+            {
+                if (userRoles.Any(r => r == item.RoleID))
+                    item.IsSelected = true;
+            }
+
+            allRoles.UserId = id;
+
+            ViewBag.UserTitle = user.Username;
+
+            return View(allRoles);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserRoles(UserRolesDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _unitOfWork._user.GetByID(model.UserId);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "کاربری پیدا نشد");
+                    return View(model);
+                }
+
+                if (await _unitOfWork._userRole.DeleteByUserId(model.UserId))
+                {
+                    var newUserRoles = new UserRolesDTO();
+                    newUserRoles.UserId = model.UserId;
+                    foreach (var item in model.Roles)
+                    {
+                        if (item.IsSelected)
+                        {
+                            newUserRoles.Roles.Add(item);
+                        }
+                    }
+                    if (await _unitOfWork._userRole.AddUserRoleDTO(newUserRoles))
+                    {
+                        _unitOfWork.Complete();
+                        return RedirectToAction("Users");
+                    }
+                }
+
+            }
+            return View(model);
         }
         #endregion
 

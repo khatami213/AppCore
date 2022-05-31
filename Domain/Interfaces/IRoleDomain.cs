@@ -1,4 +1,5 @@
 ﻿using Domain.DTO.Security.Roles;
+using Domain.DTO.Security.UserRoles;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,6 @@ namespace Domain.Interfaces
         bool IsDuplicateByName(long id, string name);
         Task AddRoleDTO(NewRoleDTO roleDTO);
         Task UpdateRoleDTO(UpdateRoleDTO roleDTO);
-
+        Task<UserRolesDTO> GetAllRolesDTO();
     }
 }
