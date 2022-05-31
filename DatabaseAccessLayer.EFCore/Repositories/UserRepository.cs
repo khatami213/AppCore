@@ -1,6 +1,7 @@
 ﻿using DatabaseAccessLayer.EFCore.DBContexts;
 using Domain.DTO.Account.Login;
 using Domain.DTO.Account.Register;
+using Domain.DTO.Security.User;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,20 @@ namespace DatabaseAccessLayer.EFCore.Repositories
                 return true;
 
             return false;
+        }
+
+        public async Task<UserDTO> GetAllUsersDTO()
+        {
+            var userDTO = new UserDTO();
+
+            userDTO.Users.AddRange(await _context.Users.Select(r => new UserInfoDTO()
+            {
+                Id = r.Id,
+                Username = r.Username,
+                UserType = r.UserType
+            }).ToListAsync());
+
+            return userDTO;
         }
 
         public async Task<LoginDTO> GetByUsername(string username)

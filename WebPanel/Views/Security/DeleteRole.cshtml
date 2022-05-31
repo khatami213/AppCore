@@ -1,0 +1,18 @@
+﻿@model Domain.DTO.Security.Roles.UpdateRoleDTO
+
+@{
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+    ViewBag.Title = "حذف نقش";
+}
+
+<h1>حذف نقش</h1>
+
+<h4>آیا از حذف نقش @Model.Name مطمئن هستید؟</h4>
+
+<form method="post" asp-action="DeleteRole">
+
+    <input asp-for="Id" type="hidden" />
+
+    <button type="submit" class="btn btn-danger">بلی</button>
+    <a asp-action="Roles" class="btn btn-primary">خیر</a>
+</form>

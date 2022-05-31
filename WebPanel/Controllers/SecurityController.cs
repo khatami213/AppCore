@@ -112,18 +112,34 @@ namespace WebPanel.Controllers
                 return View();
             }
 
-            if (await _unitOfWork._role.DeleteByID(Id))
+            var deleteRoleDTO = new UpdateRoleDTO()
             {
-                _unitOfWork.Complete();
-                return RedirectToAction("Roles");
-            }
-            else
-            {
-                ModelState.AddModelError("", "عملیات با خطا مواجه شد");
-                return RedirectToAction("Roles");
-            }
+                Id = Id,
+                Name = role.Name
+            };
 
+            return View(deleteRoleDTO);
         }
+        // [HttpPost]
+        //public async Task<IActionResult> DeleteRole(UpdateRoleDTO deleteRole)
+        //{
+        //    var role = await _unitOfWork._role.GetByID(Id);
+        //    if (role == null)
+        //    {
+        //        ModelState.AddModelError("", "نقشی پیدا نشد");
+        //        return View();
+        //    }
+        //    if (await _unitOfWork._role.DeleteByID(Id))
+        //    {
+        //        _unitOfWork.Complete();
+        //        return RedirectToAction("Roles");
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "عملیات با خطا مواجه شد");
+        //        return RedirectToAction("Roles");
+        //    }
+        //}
 
         #endregion
 
@@ -200,6 +216,33 @@ namespace WebPanel.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region Users
+
+        [HttpGet]
+        public async Task<IActionResult> Users()
+        {
+            var users = await _unitOfWork._user.GetAllUsersDTO();
+
+            foreach (var item in users.Users)
+            {
+                switch (item.UserType)
+                {
+                    case (int)CoreService.Enums.UserType.Admin:
+                        item.UserTypeTitle = "ادمین";
+                        break;
+                    case (int)CoreService.Enums.UserType.Driver:
+                        item.UserTypeTitle = "راننده";
+                        break;
+                    case (int)CoreService.Enums.UserType.Passenger:
+                        item.UserTypeTitle = "مسافر";
+                        break;
+                }
+            }
+            users.Actions = new List<ActionItems>() { new ActionItems() { Controller = "security", Action = "UserRoles", Title = "مدیریت نقش ها" } };
+            return View(users);
+        }
         #endregion
 
     }
