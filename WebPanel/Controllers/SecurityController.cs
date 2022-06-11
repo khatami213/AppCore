@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Domain.DTO.Security.Permisions;
 using Domain.DTO.Security.RolePermision;
 using Domain.DTO.Security.UserRoles;
+using CoreService;
 
 namespace WebPanel.Controllers
 {
@@ -24,7 +25,7 @@ namespace WebPanel.Controllers
         }
 
         #region Roles
-
+        [CustomAuthorization(PermisionManager.Permisions.Security_Roles_HttpGet, "")]
         [HttpGet]
         public async Task<IActionResult> Roles()
         {
@@ -37,13 +38,14 @@ namespace WebPanel.Controllers
             return View(roleDTO);
         }
 
-        [CustomAuthorization()]
+        [CustomAuthorization(PermisionManager.Permisions.Security_CreateRole_HttpGet, "")]
         [HttpGet]
         public IActionResult CreateRole()
         {
             return View();
         }
 
+        [CustomAuthorization(PermisionManager.Permisions.Security_CreateRole_HttpPost, "user,admin")]
         [HttpPost]
         public async Task<IActionResult> CreateRole(NewRoleDTO model)
         {

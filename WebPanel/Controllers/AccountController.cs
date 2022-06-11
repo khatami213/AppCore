@@ -35,7 +35,7 @@ namespace WebPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userDTO = await _unitOfWork._user.GetByUsername(model.Username);
+                var userDTO = await _unitOfWork._user.GetUsernameAndType(model.Username,model.UserType);
                 if (userDTO == null)
                 {
                     ModelState.AddModelError("", "نام کاربری پیدا نشد");

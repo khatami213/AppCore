@@ -18,5 +18,6 @@ namespace Domain.Interfaces
         Task<bool> IsDuplicateByUsernameAndUserType(string username, int userType, long id);
         Task<bool> RegisterUserDTO(RegisterDTO registerDTO);
         Task<UserDTO> GetAllUsersDTO();
+        Task<LoginDTO> GetUsernameAndType(string username, int userType);
     }
 }

@@ -19,8 +19,9 @@
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <input type="radio" name="userType" checked="checked" value="@((int)CoreService.Enums.UserType.Passenger)" />مسافر<br />
-        <input type="radio" name="userType" value="@((int)CoreService.Enums.UserType.Driver)" />راننده<br />
+        <input type="radio" asp-for="UserType" name="userType" checked="checked" value="@((int)CoreService.Enums.UserType.Passenger)" />مسافر<br />
+        <input type="radio" asp-for="UserType" name="userType" value="@((int)CoreService.Enums.UserType.Driver)" />راننده<br />
+        <input type="radio" asp-for="UserType" name="userType" value="@((int)CoreService.Enums.UserType.Admin)" />ادمین<br />
     </div>
     <div class="form-group">
         <label asp-for="RememberMe">مرا به خاطر بسپار</label>

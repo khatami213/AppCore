@@ -61,6 +61,19 @@ namespace DatabaseAccessLayer.EFCore.Repositories
 
         }
 
+        public async Task<LoginDTO> GetUsernameAndType(string username, int userType)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(r => r.Username == username && r.UserType == userType);
+            if (user == null)
+                return null;
+
+            return new LoginDTO()
+            {
+                Username = username,
+                Password = user.Password
+            };
+        }
+
         public async Task<bool> IsDuplicateByUsername(string username, long id)
         {
             return await _context.Users.AnyAsync(r => r.Username == username && r.Id != id);

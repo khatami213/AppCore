@@ -28,7 +28,7 @@ namespace WebPanel
         {
             services.AddDbContext<ApplicationContext>(options =>
             {
-                options.UseSqlServer(_configuration.GetConnectionString("AppCore1"));
+                options.UseSqlServer(_configuration.GetConnectionString("AppCore"));
             });
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
