@@ -70,7 +70,8 @@ namespace DatabaseAccessLayer.EFCore.Repositories
             return new LoginDTO()
             {
                 Username = username,
-                Password = user.Password
+                Password = user.Password,
+                UserType = user.UserType
             };
         }
 

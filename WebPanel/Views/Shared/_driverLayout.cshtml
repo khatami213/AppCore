@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/fonts.css" />
+    <script src="~/lib/jquery/jquery.slim.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fontSarbaz">
+        <a class="navbar-brand" asp-action="Index" asp-controller="driver">سفیر</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+
+                @*<li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                امنیت
+                </a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" asp-action="Roles" asp-controller="Security">نقش</a>
+                <a class="dropdown-item" asp-action="Users" asp-controller="Security">کاربران</a>
+                </div>
+                </li>*@
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="#" class="nav-link">@User.Identity.Name</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link" asp-action="logout" asp-controller="Account">خروج</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="nav-link" asp-action="login" asp-controller="Account">ورود</a>
+                    </li>
+                }
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container fontIranYekan">
+        @RenderBody()
+    </div>
+</body>
+</html>

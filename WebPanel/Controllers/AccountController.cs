@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static CoreService.Enums;
 
 namespace WebPanel.Controllers
 {
@@ -35,7 +36,7 @@ namespace WebPanel.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userDTO = await _unitOfWork._user.GetUsernameAndType(model.Username,model.UserType);
+                var userDTO = await _unitOfWork._user.GetUsernameAndType(model.Username, model.UserType);
                 if (userDTO == null)
                 {
                     ModelState.AddModelError("", "نام کاربری پیدا نشد");
@@ -59,8 +60,21 @@ namespace WebPanel.Controllers
 
                     if (model.ReturnUrl != null)
                         return LocalRedirect(model.ReturnUrl);
+                    else
+                    {
+                        switch (userDTO.UserType)
+                        {
+                            case (int)UserType.Admin:
+                                return RedirectToAction("index", "admin");
+                            case (int)UserType.Driver:
+                                return RedirectToAction("index", "driver");
+                            case (int)UserType.Passenger:
+                                return RedirectToAction("index", "passenger");
+                            default:
+                                return RedirectToAction("AccessDenied");
+                        }
+                    }
 
-                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
