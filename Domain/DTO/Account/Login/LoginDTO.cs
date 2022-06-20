@@ -17,5 +17,6 @@ namespace Domain.DTO.Account.Login
         public bool RememberMe { get; set; }
         public string ReturnUrl { get; set; }
         public int UserType { get; set; }
+        public long UserId { get; set; }
     }
 }

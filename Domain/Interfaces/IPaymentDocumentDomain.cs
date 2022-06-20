@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DTO.Charge;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace Domain.Interfaces
 {
     public interface IPaymentDocumentDomain : IGenericDomain<PaymentDocumentDomain>
     {
+        Task<bool> InsertPayDoc(ShaparakPaymentDTO paymentDTO);
     }
 }

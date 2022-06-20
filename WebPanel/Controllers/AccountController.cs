@@ -47,8 +47,10 @@ namespace WebPanel.Controllers
                 {
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.Name, model.Username),
-                        new Claim("an", model.Username)
+                        new Claim(ClaimTypes.Name, userDTO.Username),
+                        new Claim("UserType", userDTO.UserType.ToString()),
+                        new Claim("UserId", userDTO.UserId.ToString()),
+
                 };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

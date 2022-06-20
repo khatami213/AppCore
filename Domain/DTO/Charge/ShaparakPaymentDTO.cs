@@ -12,7 +12,7 @@ namespace Domain.DTO.Charge
         [Required(ErrorMessage = "شماره کارت اجباری است")]
         public string Cardno { get; set; }
         [Required(ErrorMessage = "CVV2 اجباری است")]
-        public long CVV2 { get; set; }
+        public long? CVV2 { get; set; }
         [Required(ErrorMessage = "سال تاریخ انقضا اجباری است")]
         public string ExpireYear { get; set; }
         [Required(ErrorMessage = "ماه تاریخ انقضا اجباری است")]
@@ -22,6 +22,10 @@ namespace Domain.DTO.Charge
         public string Password { get; set; }
         [Required]
         public string Username { get; set; }
+        [Required]
+        public long UserId { get; set; }
+        [Required]
         public long Amount { get; set; }
+
     }
 }

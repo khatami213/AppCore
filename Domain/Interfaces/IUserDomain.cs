@@ -19,5 +19,7 @@ namespace Domain.Interfaces
         Task<bool> RegisterUserDTO(RegisterDTO registerDTO);
         Task<UserDTO> GetAllUsersDTO();
         Task<LoginDTO> GetUsernameAndType(string username, int userType);
+        Task<bool> IncreasePassengerWalletAmount(long amount, long userId);
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DatabaseAccessLayer.EFCore.DBContexts;
+using Domain.DTO.Charge;
 using Domain.Entities;
 using Domain.Interfaces;
 using System;
@@ -16,6 +17,20 @@ namespace DatabaseAccessLayer.EFCore.Repositories
         public PaymentDocumentRepository(ApplicationContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<bool> InsertPayDoc(ShaparakPaymentDTO paymentDTO)
+        {
+            var paymentDoc = new PaymentDocumentDomain()
+            {
+                Amount = paymentDTO.Amount,
+                Cardno = paymentDTO.Cardno,
+                CreatedOn = DateTime.Now,
+                UserId = paymentDTO.UserId
+            };
+            await _context.PaymentDocuments.AddAsync(paymentDoc);
+
+            return true;
         }
     }
 }

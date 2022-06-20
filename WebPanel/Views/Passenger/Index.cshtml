@@ -45,19 +45,18 @@
             });
         }
 
-        function showChargeAmount()
-        {
+        function showChargeAmount() {
             $("#chargeAmount").modal('show');
         }
 
-        function chargeAmount()
-        {
-            var entity ={};
+        function chargeAmount() {
+            var entity = {};
             entity.Amount = $("#txtChargeAmount").val();
             entity.Username = "@User.Identity.Name";
+            entity.UserId = "@User.Claims.FirstOrDefault(r=>r.Type == "UserId").Value"
             entity = JSON.stringify(entity);
             var info = btoa(entity);
-            window.location.href = "@Url.Action("ShaparakPaymnet","Charge")/"+info;
+            window.location.href = "@Url.Action("ShaparakPaymnet","Charge")/" + info;
         }
 
     </script>

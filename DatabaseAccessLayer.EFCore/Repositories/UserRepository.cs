@@ -71,8 +71,20 @@ namespace DatabaseAccessLayer.EFCore.Repositories
             {
                 Username = username,
                 Password = user.Password,
-                UserType = user.UserType
+                UserType = user.UserType,
+                UserId = user.Id
             };
+        }
+
+        public async Task<bool> IncreasePassengerWalletAmount(long amount, long userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(r => r.Id == userId);
+            if (user == null)
+                return false;
+
+            user.Wallet += amount;
+
+            return true;
         }
 
         public async Task<bool> IsDuplicateByUsername(string username, long id)
