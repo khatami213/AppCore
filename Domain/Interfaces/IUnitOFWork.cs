@@ -15,6 +15,7 @@ namespace Domain.Interfaces
         IPermisionDomain _permision { get; set; }
         IRolePermisionDomain _rolePermision { get; set; }
         IUserRoleDomain _userRole { get; set; }
+        IPaymentDocumentDomain _paymentDocument { get; set; }
 
         void Complete();
     }

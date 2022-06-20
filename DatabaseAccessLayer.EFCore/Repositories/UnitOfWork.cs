@@ -19,6 +19,7 @@ namespace DatabaseAccessLayer.EFCore.Repositories
         public IPermisionDomain _permision { get; set; }
         public IRolePermisionDomain _rolePermision { get; set; }
         public IUserRoleDomain _userRole { get; set; }
+        public IPaymentDocumentDomain _paymentDocument { get; set; }
 
         public UnitOfWork(ApplicationContext context)
         {
@@ -30,6 +31,7 @@ namespace DatabaseAccessLayer.EFCore.Repositories
             _permision = new PermisionRepository(_context);
             _rolePermision = new RolePermisionRepository(_context);
             _userRole = new UserRoleRepository(_context);
+            _paymentDocument = new PaymentDocumentRepository(_context);
         }
 
         public void Complete()

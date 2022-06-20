@@ -22,8 +22,45 @@
             integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
             crossorigin=""></script>
 
+    <script src="~/lib/jquery/jquery.slim.min.js"></script>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/fontawesome-v5/css/all.css" />
 
+    <script>
+        function submitRequest() {
+            var distance = getDistanceFromLatLonInKm(firstlatlng.lat, firstlatlng.lng, secondlatlng.lat, secondlatlng.lng);
+            $.ajax({
+                type: "Post",
+                data: { distance: distance },
+                dataType: 'json',
+                url: "@Url.Action("CalculateFee")",
+                success: function(data) {
+                    $("#feeAmount").html(data);
+                    $("#showFee").modal('show');
+                },
+                error: function(msg) {
+                    console.log(msg);
+                }
+            });
+        }
+
+        function showChargeAmount()
+        {
+            $("#chargeAmount").modal('show');
+        }
+
+        function chargeAmount()
+        {
+            var entity ={};
+            entity.Amount = $("#txtChargeAmount").val();
+            entity.Username = "@User.Identity.Name";
+            entity = JSON.stringify(entity);
+            var info = btoa(entity);
+            window.location.href = "@Url.Action("ShaparakPaymnet","Charge")/"+info;
+        }
+
+    </script>
 
     <style>
         #map {
@@ -51,7 +88,10 @@
 
     <div class="text-center mapButtons buttonBar">
         <a href="#" class="buttonBarLinks">
-            <span class="fa-solid fa-calculator" onclick="getDistanceFromLatLonInKm(firstlatlng.lat,firstlatlng.lng,secondlatlng.lat,secondlatlng.lng)"></span>
+            <span class="fa-solid fa-calculator" onclick="submitRequest()"></span>
+        </a>
+        <a href="#" class="buttonBarLinks">
+            <span class="fas fa-plus-circle" onclick="showChargeAmount()"></span>
         </a>
         <a href="#" class="buttonBarLinks">
             <span class="fa-regular fa-trash-can" onclick="clearMarkers()"></span>
@@ -67,5 +107,42 @@
 
 <script src="~/js/map.js"></script>
 </html>
+
+<div id="showFee" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>قیمت</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 id="feeAmount" style="text-align:center"></h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="chargeAmount" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>شارژ کیف پول </h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input id="txtChargeAmount" type="number" placeholder="قیمت (تومان)" min="0" step="1000" />
+                </div>
+                <div>
+                    <button class="btn btn-success" onclick="chargeAmount()">پرداخت</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
