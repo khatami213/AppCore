@@ -51,7 +51,7 @@ namespace WebPanel.Controllers
                         new Claim("UserType", userDTO.UserType.ToString()),
                         new Claim("UserId", userDTO.UserId.ToString()),
 
-                };
+                    };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -118,7 +118,15 @@ namespace WebPanel.Controllers
                 {
                     _unitOfWork.Complete();
 
-                    var claims = new List<Claim>() { new Claim(ClaimTypes.Name, model.Username) };
+                    var userInfo = await _unitOfWork._user.GetUsernameAndType(model.Username, model.UserType);
+
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, userInfo.Username),
+                        new Claim("UserType", userInfo.UserType.ToString()),
+                        new Claim("UserId", userInfo.UserId.ToString()),
+                    };
+
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
 

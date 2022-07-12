@@ -19,14 +19,11 @@
 
     <form method="post" asp-action="ShaparakPaymnet">
         <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            @*<label><h2>مبلغ : @ViewBag.Amount</h2></label>
-            <br />
-            <label><h2>نام کاربری: @ViewBag.Username</h2></label>*@
+        <div dir="rtl" class="form-group">
 
-            <label><h2>مبلغ : @Model.Amount </h2></label>
+            <h2>نام کاربری: @Model.Username</h2>
             <br />
-            <label><h2>نام کاربری: @Model.Username</h2></label>
+            <h2>مبلغ : @Model.Amount </h2>
 
         </div>
         <div class="form-group">
@@ -49,13 +46,13 @@
             <input asp-for="Password" class="form-control" placeholder="رمز کارت" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        
+
         <input type="hidden" asp-for="Username" value="@Model.Username" />
         <input type="hidden" asp-for="UserId" value="@Model.UserId" />
         <input type="hidden" asp-for="Amount" value="@Model.Amount" />
 
         <button type="submit" class="btn btn-success">پرداخت</button>
-        <a asp-action="Roles" class="btn btn-danger">بازگشت</a>
+        <a asp-action="Index" asp-controller="Passenger" class="btn btn-danger">بازگشت</a>
     </form>
 
 </body>

@@ -1,13 +1,27 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CoreService;
+using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebPanel.Controllers
 {
     [Authorize]
     public class PassengerController : Controller
     {
-        public IActionResult Index()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public PassengerController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.Claims.FirstOrDefault(r => r.Type == "UserId").Value.ToLong();
+            var user = await _unitOfWork._user.GetByID(userId);
+            ViewBag.Wallet = user.Wallet;
+            ViewBag.Username = user.Username;
             return View();
         }
 

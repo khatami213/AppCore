@@ -37,7 +37,7 @@ namespace DatabaseAccessLayer.EFCore.Repositories
         public void Complete()
         {
             _context.SaveChanges();
-            Dispose();
+            //Dispose();
         }
 
         public void Dispose()
