@@ -25,10 +25,11 @@
     <script src="~/lib/jquery/jquery.slim.min.js"></script>
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/SignalR/signalr.js"></script>
     <link rel="stylesheet" href="~/fontawesome-v5/css/all.css" />
 
     <script>
-        function submitRequest() {
+        function CalculateFee() {
             var distance = getDistanceFromLatLonInKm(firstlatlng.lat, firstlatlng.lng, secondlatlng.lat, secondlatlng.lng);
             $.ajax({
                 type: "Post",
@@ -58,6 +59,33 @@
             var info = btoa(entity);
             window.location.href = "@Url.Action("ShaparakPaymnet","Charge")/" + info;
         }
+
+        function SendRequest() {
+            debugger;
+            var userId = @User.Claims.FirstOrDefault(r=>r.Type == "UserId").Value;
+            var fee = document.getElementById("feeAmount").value;
+            connection.invoke("SendRequest", userId, fee).then(function() {
+
+            }).catch(function(err) {
+                return console.error(err.toString());
+            });
+        }
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/RequestTripHub").build();
+        connection.start().then(function() {
+            console.log("conected");
+        }).catch(function(err) {
+            return console.error(err.toString());
+        });
+
+        connection.on("RecieveRequest", function(username, fee) {
+            debugger;
+            alert(username + '   ' + fee);
+        });
+
+        connection.on("Notification", function(msg) {
+            alert(msg);
+        });
 
     </script>
 
@@ -90,7 +118,7 @@
             <h4>موجودی : @ViewBag.Wallet</h4>
         </div>
         <a href="#" class="buttonBarLinks">
-            <span class="fa-solid fa-calculator" onclick="submitRequest()"></span>
+            <span class="fa-solid fa-calculator" onclick="CalculateFee()"></span>
         </a>
         <a href="#" class="buttonBarLinks">
             <span class="fas fa-plus-circle" onclick="showChargeAmount()"></span>
@@ -121,6 +149,7 @@
             </div>
             <div class="modal-body">
                 <h2 id="feeAmount" style="text-align:center"></h2>
+                <button class="btn btn-success" onclick="SendRequest()">ثبت درخواست</button>
             </div>
         </div>
     </div>

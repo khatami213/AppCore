@@ -20,5 +20,17 @@ namespace CoreService
             }
         }
 
+        public static int ToInt(this object o)
+        {
+            try
+            {
+                return Convert.ToInt32(o);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
     }
 }

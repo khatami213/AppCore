@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebPanel.SignalR;
 
 namespace WebPanel
 {
@@ -24,6 +25,7 @@ namespace WebPanel
         {
             _configuration = configuration;
         }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options =>
@@ -36,6 +38,8 @@ namespace WebPanel
             #region Services
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddSignalR();
 
             #endregion
 
@@ -56,15 +60,21 @@ namespace WebPanel
 
             app.UseStaticFiles();
 
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseRouting();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{Controller=Home}/{action=Index}/{Id?}");
             });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<RequestTripHub>("/RequestTripHub");
+            });
+
         }
     }
 }
