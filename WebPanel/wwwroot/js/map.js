@@ -6,6 +6,23 @@ var firstlatlng = {};
 var secondlatlng = {};
 var markerArray = new Array();
 
+$(document).ready(function () {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (data) {
+            console.log('in function lng: ' + data.coords.longitude);
+            console.log('in function lat: ' + data.coords.latitude);
+
+            currentLng = data.coords.longitude;
+            currentLat = data.coords.latitude;
+        });
+    }
+    else {
+        console.log('fail');
+    }
+
+});
+
 var map = L.map('map', {
     center: [currentLat, currentLng],
     minZoom: 10,

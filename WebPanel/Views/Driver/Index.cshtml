@@ -6,3 +6,25 @@
 
 <h1>پنل مدیریت رانندگان</h1>
 
+
+
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/RequestTripHub").build();
+    connection.start().then(function() {
+        console.log("conected");
+    }).catch(function(err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("RecieveRequest", function(username, fee) {
+        debugger;
+        alert(username + '   ' + fee);
+    });
+
+    connection.on("Notification", function(msg) {
+        alert(msg);
+    });
+
+</script>
+
+

@@ -78,11 +78,6 @@
             return console.error(err.toString());
         });
 
-        connection.on("RecieveRequest", function(username, fee) {
-            debugger;
-            alert(username + '   ' + fee);
-        });
-
         connection.on("Notification", function(msg) {
             alert(msg);
         });
